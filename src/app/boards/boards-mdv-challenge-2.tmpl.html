@@ -1,0 +1,36 @@
+<div class="col-sm-4">
+  <div class="boards">
+      <!-- HINT: Don't forget to hook up your ng-repeat element
+      to ctrl.setEditedBoard via ng-click – that way, you will
+      be able to actually see the editing form when you click on a board.
+      -->
+    <div
+      class="simple-board">
+    </div>
+
+  </div>
+</div>
+<div class="col-sm-8">
+  <!-- CREATING -->
+  <div ng-if="!ctrl.isEditing" class="col-xs-12 board-details">
+    <h3>Create a New Board</h3>
+    <hr/>
+    <form
+      name="ctrl.createForm"
+      class="create-form"
+      role="form"
+      novalidate>
+    </form>
+  </div>
+  <!-- EDITING -->
+  <div ng-if="ctrl.isEditing" class="col-xs-12 board-details">
+    <h3>Editing {{ ctrl.editedBoard.title }}</h3>
+    <hr/>
+    <form
+      name="ctrl.updateForm"
+      class="edit-form"
+      role="form"
+      novalidate>
+    </form>
+  </div>
+</div>

@@ -9,7 +9,7 @@ angular.module('noterious', [
 ])
   .constant('ENDPOINT_URI', 'https://noterious-thrakattak.firebaseio.com/')
   .config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/boards');
+    $urlRouterProvider.otherwise('/boards-challenge-2');
 
     $stateProvider
       .state('login', {
@@ -21,6 +21,17 @@ angular.module('noterious', [
       .state('boards', {
         url:'/boards',
         templateUrl: 'app/boards/boards-mdv.tmpl.html',
+        controller: 'BoardsCtrl',
+        controllerAs: 'ctrl',
+        resolve: {
+          'currentUser': ['Auth', function (Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
+      })
+      .state('boards-challenge-2', {
+        url:'/boards-challenge-2',
+        templateUrl: 'app/boards/boards-mdv-challenge-2.tmpl.html',
         controller: 'BoardsCtrl',
         controllerAs: 'ctrl',
         resolve: {

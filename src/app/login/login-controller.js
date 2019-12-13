@@ -33,7 +33,7 @@ angular.module('noterious')
     }
 
     function onSuccess(result) {
-      $state.go('boards');
+      $state.go('boards-challenge-2');
     }
 
     function onError(reason) {
