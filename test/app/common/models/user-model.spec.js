@@ -32,29 +32,36 @@ describe('Service: UserModel', function () {
       module(function ($provide) {
         $provide.value('Auth', mockAuth);
       });
-
-      //create a 'simple' mock Auth object that returns promises that can be spied-upon
-      mockAuth.shouldAuthWithPasswordHaveError = false;
-      mockAuth.$signInWithEmailAndPassword = function (user, callbackFn) {
-        var authData = {
-          uid: expectedUid,
-          email: user.email,
-          password: user.password
-        };
-        return callbackFn(mockAuth.shouldAuthWithPasswordHaveError, authData);
-      };
-
-      mockAuth.shouldCreateUserHaveError = false;
-      mockAuth.$createUserWithEmailAndPassword = function (user, callbackFn) {
-        var authData = {
-          uid: expectedUid,
-          email: user.email,
-          password: user.password
-        };
-        return callbackFn(mockAuth.shouldCreateUserHaveError, authData);
-      };
-
+      
       inject(function ($q) {
+        //create a 'simple' mock Auth object that returns promises that can be spied-upon
+        mockAuth.shouldCreateUserHaveError = false;
+        mockAuth.shouldAuthWithPasswordHaveError = false;
+        mockAuth.$signInWithEmailAndPassword = function (email, password) {
+          var deferred = $q.defer();
+          deferred.resolve({
+            uid: expectedUid,
+            email: email,
+            password: password,
+            getToken: function () {
+              var deferred = $q.defer();
+              deferred.resolve('fake-token');
+              return deferred.promise;
+            }
+          });
+          return deferred.promise;
+        };
+        
+        mockAuth.$createUserWithEmailAndPassword = function (email, password) {
+          var deferred = $q.defer();
+          deferred.resolve({
+            uid: expectedUid,
+            email: email,
+            password: password
+          });
+          return deferred.promise;
+        };
+
         mockAuth.$signOut = function () {
           var deferred = $q.defer();
           deferred.resolve();
@@ -97,14 +104,16 @@ describe('Service: UserModel', function () {
 
       resolvePromises();
 
-      expect(mockAuth.$createUserWithEmailAndPassword).toHaveBeenCalledWith({
-        email: expectedUser.email,
-        password: expectedUser.password
-      }, jasmine.any(Function));
+      expect(mockAuth.$createUserWithEmailAndPassword).toHaveBeenCalledWith(
+        expectedUser.email,
+        expectedUser.password);
 
       expect(UserModel.getCurrentUser()).toEqual(expectedUid);
 
-      expect(UserModel.login).toHaveBeenCalledWith(expectedUser.email, expectedUser.password);
+      expect(UserModel.login).toHaveBeenCalledWith({
+        email: expectedUser.email,
+        password: expectedUser.password
+      });
     });
 
     it('should login the provided user', function () {
@@ -116,10 +125,9 @@ describe('Service: UserModel', function () {
 
       resolvePromises();
 
-      expect(mockAuth.$signInWithEmailAndPassword).toHaveBeenCalledWith({
-        email: expectedUser.email,
-        password: expectedUser.password
-      }, jasmine.any(Function));
+      expect(mockAuth.$signInWithEmailAndPassword).toHaveBeenCalledWith(
+        expectedUser.email,
+        expectedUser.password);
 
       expect(UserModel.getCurrentUser()).toEqual(expectedUid);
 

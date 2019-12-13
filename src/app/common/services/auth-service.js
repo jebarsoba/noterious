@@ -11,7 +11,9 @@ angular.module('noterious.common')
       messagingSenderId: "42812110896",
       appId: "1:42812110896:web:b8e222bb17929532e8d5f5"
   };
-  firebase.initializeApp(config);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
   return $firebaseAuth(firebase.auth())
   })
 ;
