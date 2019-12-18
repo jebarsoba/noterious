@@ -81,7 +81,7 @@ describe('Controller: LoginCtrl', function () {
 
       resolvePromises();
 
-      expect(state.go).toHaveBeenCalledWith('boards');
+      expect(state.go).toHaveBeenCalledWith('boards-challenge-2');
       expect(loginCtrl.reset).toHaveBeenCalled();
       expect(loginCtrl.user).toEqual(createDefaultUserState());
       expect(loginCtrl.loading).toBeFalsy();
@@ -108,7 +108,7 @@ describe('Controller: LoginCtrl', function () {
 
       resolvePromises();
 
-      expect(state.go).toHaveBeenCalledWith('boards');
+      expect(state.go).toHaveBeenCalledWith('boards-challenge-2');
       expect(loginCtrl.reset).toHaveBeenCalled();
       expect(loginCtrl.user).toEqual(createDefaultUserState());
       expect(loginCtrl.loading).toBeFalsy();

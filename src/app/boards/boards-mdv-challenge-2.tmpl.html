@@ -40,7 +40,12 @@
       name="ctrl.updateForm"
       class="edit-form"
       role="form"
+      ng-submit="ctrl.updateBoard(ctrl.editedBoardId, ctrl.editedBoard, ctrl.updateForm.$valid)"
       novalidate>
+      <input type="text" ng-model="ctrl.editedBoard.title" required="true" />
+      <input type="text" ng-model="ctrl.editedBoard.description" />
+      <input type="checkbox" ng-model="ctrl.editedBoard.isPublic" />
+      <button type="submit">Update</button>
       <button ng-click="ctrl.cancelEditing()">Cancel</button>
     </form>
   </div>
