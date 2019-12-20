@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('noterious')
-  .controller('BoardsCtrl', function (currentUser, BoardsModel, Gridster) {
+  .controller('BoardsCtrl', function (currentUser, BoardsModel, BoardsModelChallenge3, Gridster) {
     var ctrl = this;
 
     ctrl.loading = false;
@@ -22,12 +22,12 @@ angular.module('noterious')
     };
 
     ctrl.getBoards = function () {
-      BoardsModel.all()
-        .then(function (result) {
-          ctrl.boards = (result !== 'null') ? result : {};
+      BoardsModelChallenge3.all()
+        .then(function (boards) {
+          ctrl.boards = boards;
         }, function () {
           ctrl.resetForm();
-        });
+        })
     };
 
     ctrl.createBoard = function (board, isValid) {

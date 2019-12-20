@@ -9,12 +9,12 @@ describe('Controller: BoardsCtrl', function () {
       mockBoardsModel,
       mockBoards = {
         "-Lw0LkIreee9ixjq9bqC" : {
-          "description" : "Board 1 asd",
+          "description" : "Board 1 (from BoardsModelChallenge3)",
           "isPublic" : false,
           "title" : "Board 1"
         },
         "-Lw0LlhmJvDwZusMlw8X" : {
-          "description" : "Board 2",
+          "description" : "Board 2 (from BoardsModelChallenge3)",
           "isPublic" : false,
           "title" : "Board 2"
         }
@@ -56,6 +56,6 @@ describe('Controller: BoardsCtrl', function () {
     httpBackend.when('GET', 'app/boards/boards-mdv-challenge-2.tmpl.html').respond({});
     scope.$apply();
 
-    expect(BoardsCtrl.boards).toBe(mockBoards);
+    expect(BoardsCtrl.boards).toEqual(mockBoards);
   });
 });
