@@ -29,6 +29,17 @@ angular.module('noterious', [
           }]
         }
       })
+      .state('notes', {
+        url:'/boards/:boardId/notes',
+        templateUrl: 'app/notes/notes-mdv.tmpl.html',
+        controller: 'NotesCtrl',
+        controllerAs: 'ctrl',
+        resolve: {
+          'currentUser': ['Auth', function (Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
+      })
       .state('boards-challenge-2', {
         url:'/boards-challenge-2',
         templateUrl: 'app/boards/boards-mdv-challenge-2.tmpl.html',
@@ -40,10 +51,10 @@ angular.module('noterious', [
           }]
         }
       })
-      .state('notes', {
-        url:'/boards/:boardId/notes',
-        templateUrl: 'app/notes/notes-mdv.tmpl.html',
-        controller: 'NotesCtrl',
+      .state('notes-challenge-2', {
+        url:'/boards-challenge-2/:boardId/notes',
+        templateUrl: 'app/notes/notes-mdv-challenge-2.tmpl.html',
+        controller: 'NotesCtrlChallenge2',
         controllerAs: 'ctrl',
         resolve: {
           'currentUser': ['Auth', function (Auth) {
